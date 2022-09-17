@@ -36,6 +36,7 @@ local function run()
             io.close(file_obj)
         end
         vim.cmd('vsplit | terminal ' .. command)
+        vim.cmd('startinsert')
     end)
 end
 
