@@ -25,7 +25,10 @@ local function run()
     end
 
     vim.ui.input({ prompt = "Build Command: ", default = command }, function(input)
-        if command ~= input and input ~= nil then
+        if input == nil then
+            return
+        end
+        if command ~= input then
             command = input
             local file_obj = io.open(file, "w")
             io.output(file_obj)
@@ -38,5 +41,5 @@ end
 
 return {
     run = run,
-    command = command
+    command = command,
 }
