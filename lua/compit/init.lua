@@ -23,7 +23,7 @@ local function run()
             io.output(file_obj)
             io.write(command)
         end
-        vim.cmd('terminal ' .. command)
+        vim.cmd('vsplit | terminal ' .. command)
     end)
 end
 
