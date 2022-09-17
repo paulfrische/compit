@@ -1,20 +1,27 @@
-local function file_exists(name)
-   local f=io.open(name,"r")
-   if f~=nil then io.close(f) return true else return false end
+function file_exists(name)
+   local f = io.open(name,"r")
+   if f ~= nil then
+       io.close(f)
+       return true
+   else
+       return false
+   end
 end
+
+command = "make"
 
 local function run()
     local file = vim.fs.normalize('$XDG_CONFIG_HOME/nvim/compit_cache');
-    local command = "make";
     if file_exists(file) then
-        print("exists")
         local file_obj = io.open(file, "r")
         io.input(file_obj)
         command = io.read()
+        io.close(file_obj)
     else
         local file_obj = io.open(file, "w")
         io.output(file_obj)
         io.write(command)
+        io.close(file_obj)
     end
 
     vim.ui.input({ prompt = "Build Command: ", default = command }, function(input)
@@ -26,6 +33,7 @@ local function run()
             local file_obj = io.open(file, "w")
             io.output(file_obj)
             io.write(command)
+            io.close(file_obj)
         end
         vim.cmd('vsplit | terminal ' .. command)
     end)
