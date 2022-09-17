@@ -7,6 +7,7 @@ local function run()
     local file = vim.fs.normalize('$XDG_CONFIG_HOME/nvim/compit_cache');
     local command = "make";
     if file_exists(file) then
+        print("exists")
         local file_obj = io.open(file, "r")
         io.input(file_obj)
         command = io.read()
@@ -17,6 +18,9 @@ local function run()
     end
 
     vim.ui.input({ prompt = "Build Command: ", default = command }, function(input)
+        if input == nil then
+            return
+        end
         if command ~= input then
             command = input
             local file_obj = io.open(file, "w")
