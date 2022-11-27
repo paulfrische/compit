@@ -1,4 +1,6 @@
-function file_exists(name)
+M = {}
+
+local function file_exists(name)
    local f = io.open(name,"r")
    if f ~= nil then
        io.close(f)
@@ -8,10 +10,9 @@ function file_exists(name)
    end
 end
 
-command = "make"
-
-local function run()
+local function get_command()
     local file = vim.fs.normalize('$XDG_CONFIG_HOME/nvim/compit_cache');
+    local command = "make"
     if file_exists(file) then
         local file_obj = io.open(file, "r")
         io.input(file_obj)
@@ -23,24 +24,29 @@ local function run()
         io.write(command)
         io.close(file_obj)
     end
+    return command
+end
 
+local function set_command(command)
+    local file_obj = io.open(file, "w")
+    io.output(file_obj)
+    io.write(command)
+    io.close(file_obj)
+end
+
+M.run = function()
+    local command = get_command()
     vim.ui.input({ prompt = "Build Command: ", default = command }, function(input)
         if input == nil then
             return
         end
         if command ~= input then
             command = input
-            local file_obj = io.open(file, "w")
-            io.output(file_obj)
-            io.write(command)
-            io.close(file_obj)
+            set_command(command)
         end
         vim.cmd('vsplit | terminal ' .. command)
         vim.cmd('startinsert')
     end)
 end
 
-return {
-    run = run,
-    command = command,
-}
+return M
