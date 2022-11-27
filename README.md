@@ -13,6 +13,8 @@ vim.api.nvim_set_keymap('n', '<leader>c', ':lua require"compit".run()<CR>', { no
 After running the compile/run command compit saves it and will put it in next
 time you use compit.
 
+https://user-images.githubusercontent.com/61984114/190856812-4b817613-d045-40d7-92e1-30e8783d9620.mp4
+
 ### Installation
 Packer:
 ```lua
