@@ -28,6 +28,7 @@ local function get_command()
 end
 
 local function set_command(command)
+    local file = vim.fs.normalize('$XDG_CONFIG_HOME/nvim/compit_cache');
     local file_obj = io.open(file, "w")
     io.output(file_obj)
     io.write(command)
