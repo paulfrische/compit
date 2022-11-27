@@ -51,11 +51,17 @@ local function run_with_prompt()
 end
 
 M.run = function(options)
-    if options.prompt ~= nil then
-        if options.prompt then
-            local command = get_command()
-            vim.cmd('vsplit | terminal ' .. command)
-            vim.cmd('startinsert')
+    if options ~= nil then
+        if options.prompt ~= nil then
+            if options.prompt == false then
+                local command = get_command()
+                vim.cmd('vsplit | terminal ' .. command)
+                vim.cmd('startinsert')
+            else
+                run_with_prompt()
+            end
+        else
+            run_with_prompt()
         end
     else
         run_with_prompt()
